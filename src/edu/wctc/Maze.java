@@ -1,5 +1,8 @@
 package edu.wctc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Maze {
     private Room currentRoom;
     private Player player;
@@ -28,12 +31,38 @@ public class Maze {
         }
     }
 
-    public String LootCurrentRoom() {
+    public String LootCurrentRoom(String name) {
         if (currentRoom.getLoot() != null) {
-            return currentRoom.getLoot();
+            if (name != null) {
+                player.addToInventory(name);
+                return currentRoom.getLoot();
+            }
+            else {
+                return currentRoom.noLoot();
+            }
         }
         else {
             return "You can not loot the current room";
         }
+    }
+
+    public boolean Move(char direction) {
+        if (currentRoom.getAdjoiningRoom(direction) != null) {
+            currentRoom = currentRoom.getAdjoiningRoom(direction);
+            return true;
+        }
+        else {return false;}
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }

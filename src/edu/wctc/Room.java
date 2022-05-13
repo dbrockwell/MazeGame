@@ -1,6 +1,6 @@
 package edu.wctc;
 
-public abstract class Room implements Interactable, Lootable, Exitable {
+public class Room implements Interactable, Lootable, Exitable {
     private String name;
     private String description;
     private String interact = null;
@@ -83,5 +83,13 @@ public abstract class Room implements Interactable, Lootable, Exitable {
 
     public void setBack(Room back) {
         this.back = back;
+    }
+
+    public String noLoot() {
+        return "Room has been looted";
+    }
+
+    public String noInteract() {
+        return "You can no longer interact with this room";
     }
 }
