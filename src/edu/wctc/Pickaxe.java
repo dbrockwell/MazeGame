@@ -1,12 +1,11 @@
 package edu.wctc;
 
-public class Flask {
-    private String name = "Flask";
-    private int score = 10;
-    private static Flask instance = null;
+public class Pickaxe {
+    private String name = "Pickaxe";
+    private static Pickaxe instance = null;
     private boolean obtained = false;
 
-    public String getFlask() {
+    public String getPickaxe() {
         if (!obtained) {
             obtained = true;
             return name;
@@ -16,15 +15,15 @@ public class Flask {
         }
     }
 
-    public int getScore() {
-        return score;
+    public boolean isObtained() {
+        return obtained;
     }
 
-    public static Flask getInstance() {
+    public static Pickaxe getInstance() {
         if (instance == null) {
             synchronized (Flask.class) {
                 if (instance == null) {
-                    instance = new Flask();
+                    instance = new Pickaxe();
                 }
             }
         }

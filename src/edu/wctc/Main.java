@@ -27,6 +27,7 @@ public class Main {
         trappedManRoom.setInteract("You Talk to the man");
 
         Room darkRoom = new Room("Dark Room", "This room is dark with a small sculpture");
+        darkRoom.setInteract("You pressed a button and set of a trap, and the sculpture is enclosed with bars");
         darkRoom.setLoot("You picked up the small sculpture");
 
         introRoom.setFurther(gemRoom);
@@ -43,6 +44,7 @@ public class Main {
             System.out.println("\n-----------------------------------------------------\n");
             System.out.println("Room: " + maze.getCurrentRoom().getName());
             System.out.println("Description: " + maze.getCurrentRoom().getDescription());
+            System.out.println(maze.getCurrentRoom().getExits());
             System.out.print("Enter Option: ");
             char option = keyboard.nextLine().toLowerCase().charAt(0);
             if (option == 'f' || option == 'b'){
@@ -52,14 +54,37 @@ public class Main {
             }
             else if (option == 'i'){
                 System.out.println(maze.InteractCurrentRoom());
+                if (maze.getCurrentRoom() == trappedManRoom) {
+                    Person person = Person.getInstance(personPlaying);
+                    int promptRequest = 0;
+                    int rotations = 0;
+                    do {
+                        if (rotations == 0) {
+                            System.out.println(person.getIntroduction());
+                        }
+                        if (person.getPromptList().size() != 0) {
+                            String prompt = person.showPrompt();
+                            System.out.println(prompt);
+                            try {
+                                promptRequest = Integer.parseInt(keyboard.nextLine());
+                                System.out.println(person.answerPrompt(promptRequest));
+                            } catch (Exception ignore) {
+                                promptRequest = 0;
+                            }
+                        }
+                        rotations += 1;
+                    } while (promptRequest < person.getPromptList().size() + 1 && promptRequest > 0);
+                }
             }
             else if (option == 'l'){
                 String name = null;
+                int score = 0;
                 if (maze.getCurrentRoom() == gemRoom) {
                     Flask flask = Flask.getInstance();
                     name = flask.getFlask();
+                    score = flask.getScore();
                 }
-                System.out.println(maze.LootCurrentRoom(name));
+                System.out.println(maze.LootCurrentRoom(name, score));
             }
             else if (option == 'e'){
                 System.out.println(maze.ExitCurrentRoom());
