@@ -11,8 +11,8 @@ public class Main {
 
         System.out.println("""
                 You are in search of a cave full of gems and other worldly power.
-                You have located the enterance to the cave and you enter.
-                Unfortunatly, as you enter the cave enterance behind you collasps and you loose your pickaxe under the rubble""");
+                You have located the entrance to the cave and you enter.
+                Unfortunately, as you enter the cave entrance behind you collapsed and you loose your pickaxe under the rubble""");
 
         System.out.println("The controls are f: to go further, b: to go back, i: for interact, l: for loot, e: for exit cave, v: for inventory");
 
