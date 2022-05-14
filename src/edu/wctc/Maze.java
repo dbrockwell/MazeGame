@@ -15,7 +15,9 @@ public class Maze {
 
     public String ExitCurrentRoom() {
         if (currentRoom.getExit() != null) {
-            isFinished = true;
+            if (currentRoom.isExitObtainable()) {
+                isFinished = true;
+            }
             return currentRoom.getExit();
         }
         else {
@@ -68,8 +70,10 @@ public class Maze {
         this.currentRoom = currentRoom;
     }
 
-    public void addRandomGem() {
+    public String addRandomGem() {
         int randomNumber = (int)(Math.random() * (GemColors.values().length));
-        player.addToInventory(gemFactory.getGem(randomNumber));
+        String randomGem = gemFactory.getGem(randomNumber);
+        player.addToInventory(randomGem);
+        return randomGem;
     }
 }

@@ -18,18 +18,18 @@ public class Main {
         System.out.println("The controls are f: to go further, b: to go back, i: for interact, l: for loot, e: for exit cave, v: for inventory");
 
         Room introRoom = new Room("Intro Room", "This is the starting room");
-        introRoom.setExit("You can exit the Maze");
+        introRoom.setExit("You can exit the Maze", new ItemBoundStrategy(personPlaying, "Pickaxe"), "You need a pickaxe to escape the maze");
 
         Room gemRoom = new Room("Gem Room", "This room is full of shiny gems");
-        gemRoom.setInteract("You have obtained a gem");
-        gemRoom.setLoot("You have found a flask");
+        gemRoom.setInteract("You have obtained a gem", new ItemBoundStrategy(personPlaying, "Pickaxe"), "You need a pickaxe to obtain a gem");
+        gemRoom.setLoot("You have found a flask", new FreeStrategy(), "");
 
         Room trappedManRoom = new Room("Room with Trap", "This room has a man who is trapped");
-        trappedManRoom.setInteract("You Talk to the man");
+        trappedManRoom.setInteract("You Talk to the man", new FreeStrategy(), "");
 
         Room darkRoom = new Room("Dark Room", "This room is dark with a small sculpture");
-        darkRoom.setInteract("You pressed a button and set of a trap, and the sculpture is enclosed with bars");
-        darkRoom.setLoot("You picked up the small artifact");
+        darkRoom.setInteract("You pressed a button and set of a trap, and the sculpture is enclosed with bars", new FreeStrategy(), "");
+        darkRoom.setLoot("You picked up the small artifact", new SituationalBoundStrategy(true), "There are bars around the artifact");
 
         introRoom.setFurther(gemRoom);
         gemRoom.setFurther(trappedManRoom);
@@ -63,13 +63,14 @@ public class Main {
                     Person person = Person.getInstance(personPlaying);
                     int promptRequest = 0;
                     int rotations = 0;
+                    int size = 0;
                     do {
                         if (rotations == 0) {
                             System.out.println(person.getIntroduction());
                         }
                         if (person.getPromptList().size() != 0) {
-                            String prompt = person.showPrompt();
-                            System.out.println(prompt);
+                            System.out.println(person.showPrompt());
+                            size = person.getPromptList().size() + 1;
                             try {
                                 promptRequest = Integer.parseInt(keyboard.nextLine());
                                 System.out.println(person.answerPrompt(promptRequest));
@@ -78,10 +79,13 @@ public class Main {
                             }
                         }
                         rotations += 1;
-                    } while (promptRequest < person.getPromptList().size() + 1 && promptRequest > 0);
+                    } while ((promptRequest < size && promptRequest > 0) && person.getPromptList().size() > 0);
                 }
                 if (maze.getCurrentRoom() == gemRoom) {
-                    maze.addRandomGem();
+                    if (gemRoom.isInteractObtainable()) {
+                        String gem = maze.addRandomGem();
+                        System.out.println(gem + " was added to inventory");
+                    }
                 }
             }
             else if (option == 'l'){
