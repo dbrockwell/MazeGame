@@ -29,7 +29,7 @@ public class Main {
 
         Room darkRoom = new Room("Dark Room", "This room is dark with a small sculpture");
         darkRoom.setInteract("You pressed a button and set of a trap, and the sculpture is enclosed with bars");
-        darkRoom.setLoot("You picked up the small sculpture");
+        darkRoom.setLoot("You picked up the small artifact");
 
         introRoom.setFurther(gemRoom);
         gemRoom.setFurther(trappedManRoom);
@@ -91,6 +91,11 @@ public class Main {
                     Flask flask = Flask.getInstance();
                     name = flask.getFlask();
                     score = flask.getScore();
+                }
+                if (maze.getCurrentRoom() == darkRoom) {
+                    Artifact artifact = Artifact.getInstance();
+                    name = artifact.getArtifact();
+                    score = artifact.getScore();
                 }
                 System.out.println(maze.LootCurrentRoom(name, score));
             }
