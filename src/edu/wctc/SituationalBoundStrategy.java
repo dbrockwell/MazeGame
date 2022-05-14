@@ -1,19 +1,22 @@
 package edu.wctc;
 
 public class SituationalBoundStrategy implements ObtainabilityStrategy{
-    boolean restriction;
+    private Situation situation;
+    private boolean situational;
 
-    public SituationalBoundStrategy(boolean restriction) {
-        this.restriction = restriction;
+    public SituationalBoundStrategy(Situation situation) {
+        this.situation = situation;
+    }
+
+    public void setSituation() {
+        if (situation != null) {
+            situational = situation.situation();
+        }
     }
 
     @Override
     public boolean obtain(boolean initialObtainability) {
-        if (restriction) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        setSituation();
+        return situational;
     }
 }

@@ -36,9 +36,12 @@ public class Maze {
 
     public String LootCurrentRoom(String name, int score) {
         if (currentRoom.getLoot() != null) {
-            if (name != null) {
+            if (name != null && name != "") {
                 player.addToInventory(name);
                 player.addToScore(score);
+                return currentRoom.getLoot();
+            }
+            else if (name == "") {
                 return currentRoom.getLoot();
             }
             else {

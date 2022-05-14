@@ -28,8 +28,8 @@ public class Main {
         trappedManRoom.setInteract("You Talk to the man", new FreeStrategy(), "");
 
         Room darkRoom = new Room("Dark Room", "This room is dark with a small sculpture");
-        darkRoom.setInteract("You pressed a button and set of a trap, and the sculpture is enclosed with bars", new FreeStrategy(), "");
-        darkRoom.setLoot("You picked up the small artifact", new SituationalBoundStrategy(true), "There are bars around the artifact");
+        darkRoom.setInteract("You pressed a button and set of a trap, and the sculpture is enclosed with bars", new SituationalBoundStrategy(ArtifactTrap.getInstance()), "The button is stuck and can not be pressed again");
+        darkRoom.setLoot("You picked up the small artifact", new SituationalBoundStrategy(ArtifactTrap.getInstance()), "There are bars around the artifact");
 
         introRoom.setFurther(gemRoom);
         gemRoom.setFurther(trappedManRoom);
@@ -84,7 +84,14 @@ public class Main {
                 if (maze.getCurrentRoom() == gemRoom) {
                     if (gemRoom.isInteractObtainable()) {
                         String gem = maze.addRandomGem();
+                        personPlaying.addToScore(20);
                         System.out.println(gem + " was added to inventory");
+                    }
+                }
+                if (maze.getCurrentRoom() == darkRoom) {
+                    if (darkRoom.isInteractObtainable()) {
+                        ArtifactTrap.getInstance().pressButton();
+                        personPlaying.addToScore(-50);
                     }
                 }
             }
@@ -97,9 +104,14 @@ public class Main {
                     score = flask.getScore();
                 }
                 if (maze.getCurrentRoom() == darkRoom) {
-                    Artifact artifact = Artifact.getInstance();
-                    name = artifact.getArtifact();
-                    score = artifact.getScore();
+                    if (darkRoom.isLootObtainable()) {
+                        Artifact artifact = Artifact.getInstance();
+                        name = artifact.getArtifact();
+                        score = artifact.getScore();
+                    }
+                    else {
+                        name = "";
+                    }
                 }
                 System.out.println(maze.LootCurrentRoom(name, score));
             }
