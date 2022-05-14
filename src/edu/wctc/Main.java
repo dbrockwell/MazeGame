@@ -8,6 +8,7 @@ public class Main {
         Scanner keyboard = new Scanner(System.in);
 
         Player personPlaying = new Player();
+        GemFactory gemFactory = new GemFactory();
 
         System.out.println("""
                 You are in search of a cave full of gems and other worldly power.
@@ -37,7 +38,7 @@ public class Main {
         trappedManRoom.setBack(gemRoom);
         darkRoom.setBack(trappedManRoom);
 
-        Maze maze = new Maze(personPlaying);
+        Maze maze = new Maze(personPlaying, gemFactory);
         maze.setCurrentRoom(introRoom);
 
         do {
@@ -46,7 +47,11 @@ public class Main {
             System.out.println("Description: " + maze.getCurrentRoom().getDescription());
             System.out.println(maze.getCurrentRoom().getExits());
             System.out.print("Enter Option: ");
-            char option = keyboard.nextLine().toLowerCase().charAt(0);
+            String optionString = keyboard.nextLine();
+            char option = 'a';
+            if (optionString != "") {
+                option = optionString.toLowerCase().charAt(0);
+            }
             if (option == 'f' || option == 'b'){
                 if (!maze.Move(option)) {
                     System.out.println("You can not exit the room in that direction");
@@ -74,6 +79,9 @@ public class Main {
                         }
                         rotations += 1;
                     } while (promptRequest < person.getPromptList().size() + 1 && promptRequest > 0);
+                }
+                if (maze.getCurrentRoom() == gemRoom) {
+                    maze.addRandomGem();
                 }
             }
             else if (option == 'l'){

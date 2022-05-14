@@ -41,7 +41,7 @@ public class Person {
         if (!firstObjective) {
             prompts.add("Could I use that Pickaxe you have?");
         }
-        if (firstObjective && player.getInventory().contains("Flask")) {
+        if (firstObjective && player.getInventory().containsKey("Flask")) {
             prompts.add("I have found your flask");
         }
         return prompts;

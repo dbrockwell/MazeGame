@@ -1,25 +1,27 @@
 package edu.wctc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Player {
     private int score;
-    private List<String> inventory = new ArrayList<>();
+    private HashMap<String, Integer> inventory = new HashMap<String, Integer>();
 
     public int getScore() {
         return score;
     }
 
-    public List<String> getInventory() {
+    public HashMap<String, Integer> getInventory() {
         return inventory;
     }
 
     public String getFormattedInventory() {
         if (getInventory().size() != 0) {
             StringBuilder inventoryBuild = new StringBuilder();
-            for (int i = 0; i < getInventory().size(); i++) {
-                inventoryBuild.append(getInventory().get(i));
+            for (String i : inventory.keySet()) {
+                inventoryBuild.append(i);
+                inventoryBuild.append(" [");
+                inventoryBuild.append(inventory.get(i));
+                inventoryBuild.append("]");
                 inventoryBuild.append(" :: ");
             }
             return inventoryBuild.toString();
@@ -34,10 +36,16 @@ public class Player {
     }
 
     public void addToInventory(String item) {
-        inventory.add(item);
+        if (inventory.containsKey(item)) {
+            inventory.replace(item, inventory.get(item) + 1);
+        }
+        else {
+            inventory.put(item, 1);
+        }
     }
 
     public void replaceInventoryItem(String toReplace, String replaceWith) {
-        inventory.set(inventory.indexOf(toReplace), replaceWith);
+        inventory.remove(toReplace);
+        inventory.put(replaceWith, 1);
     }
 }

@@ -1,15 +1,16 @@
 package edu.wctc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 public class Maze {
     private Room currentRoom;
     private Player player;
     private boolean isFinished;
+    private FactoryCreate gemFactory;
 
-    public Maze(Player player) {
+    public Maze(Player player, FactoryCreate gemFactory) {
         this.player = player;
+        this.gemFactory = gemFactory;
     }
 
     public String ExitCurrentRoom() {
@@ -65,5 +66,10 @@ public class Maze {
 
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
+    }
+
+    public void addRandomGem() {
+        int randomNumber = (int)(Math.random() * (GemColors.values().length));
+        player.addToInventory(gemFactory.getGem(randomNumber));
     }
 }
