@@ -17,6 +17,7 @@ public class Main {
 
         System.out.println("The controls are f: to go further, b: to go back, i: for interact, l: for loot, e: for exit cave, v: for inventory");
 
+        //Each room calls a strategy
         Room introRoom = new Room("Intro Room", "This is the starting room");
         introRoom.setExit("You can exit the Maze", new ItemBoundStrategy(personPlaying, "Pickaxe"), "You need a pickaxe to escape the maze");
 
@@ -28,7 +29,7 @@ public class Main {
         trappedManRoom.setInteract("You Talk to the man", new FreeStrategy(), "");
 
         Room darkRoom = new Room("Dark Room", "This room is dark with a small sculpture");
-        darkRoom.setInteract("You pressed a button and set of a trap, and the sculpture is enclosed with bars", new SituationalBoundStrategy(ArtifactTrap.getInstance()), "The button is stuck and can not be pressed again");
+        darkRoom.setInteract("You pressed a button and set of a trap, and the artifact is enclosed with bars", new SituationalBoundStrategy(ArtifactTrap.getInstance()), "The button is stuck and can not be pressed again");
         darkRoom.setLoot("You picked up the small artifact", new SituationalBoundStrategy(ArtifactTrap.getInstance()), "There are bars around the artifact");
 
         introRoom.setFurther(gemRoom);
@@ -40,9 +41,10 @@ public class Main {
 
         Maze maze = new Maze(personPlaying, gemFactory);
         maze.setCurrentRoom(introRoom);
+        String divider = "\n-----------------------------------------------------\n";
 
         do {
-            System.out.println("\n-----------------------------------------------------\n");
+            System.out.println(divider);
             System.out.println("Room: " + maze.getCurrentRoom().getName());
             System.out.println("Description: " + maze.getCurrentRoom().getDescription());
             System.out.println(maze.getCurrentRoom().getExits());
@@ -122,5 +124,23 @@ public class Main {
                 System.out.println(personPlaying.getFormattedInventory());
             }
         }while(!maze.isFinished());
+
+        System.out.println(divider);
+        Ending ending = new Ending(personPlaying);
+        System.out.println("Your score is: " + personPlaying.getScore());
+        System.out.println("You have collected: " + ending.getGemCount() + " " + ending.gemPrint());
+        if (ending.rainbowAchievement() != null) {
+            System.out.println(ending.rainbowAchievement());
+        }
+        if (ending.obtainAllAchievement() != null) {
+            System.out.println(ending.obtainAllAchievement());
+        }
+        if (ending.gemCollectorAchievement() != null) {
+            System.out.println(ending.gemCollectorAchievement());
+        }
+        if (ending.gemGrinderAchievement() != null) {
+            System.out.println(ending.gemGrinderAchievement());
+        }
+        System.out.println(ending.getEnding());
     }
 }

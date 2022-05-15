@@ -1,6 +1,7 @@
 package edu.wctc;
 
 public class Room implements Interactable, Lootable, Exitable {
+    // each 3 abilities a room can have a strategy entering and returning data
     private String name;
     private String description;
     private String interact = null;

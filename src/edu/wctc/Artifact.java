@@ -20,6 +20,7 @@ public class Artifact {
         return score;
     }
 
+    //Only one artifact can be in the maze so there is a singleton
     public static Artifact getInstance() {
         if (instance == null) {
             synchronized (Artifact.class) {

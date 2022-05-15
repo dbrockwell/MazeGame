@@ -1,6 +1,7 @@
 package edu.wctc;
 
 public class ItemBoundStrategy implements ObtainabilityStrategy{
+    // this is a strategy for when an item is needed
     Player player;
     String Item;
 

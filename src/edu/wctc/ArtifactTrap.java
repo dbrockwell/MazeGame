@@ -1,6 +1,7 @@
 package edu.wctc;
 
 public class ArtifactTrap implements Situation {
+    //this was a class turned into a sub strategy
     private boolean isOpen = true;
     private static ArtifactTrap instance = null;
 

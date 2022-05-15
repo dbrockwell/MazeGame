@@ -19,7 +19,7 @@ public class Flask {
     public int getScore() {
         return score;
     }
-
+    // here is a get instance of a singleton
     public static Flask getInstance() {
         if (instance == null) {
             synchronized (Flask.class) {

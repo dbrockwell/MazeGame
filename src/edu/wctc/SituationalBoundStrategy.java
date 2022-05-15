@@ -1,6 +1,7 @@
 package edu.wctc;
 
 public class SituationalBoundStrategy implements ObtainabilityStrategy{
+    //This strategy calls another sub strategy
     private Situation situation;
     private boolean situational;
 

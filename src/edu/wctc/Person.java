@@ -89,7 +89,7 @@ public class Person {
         player.replaceInventoryItem("Flask", Pickaxe.getInstance().getPickaxe());
         return "Thank for getting me my flask, here is the pickaxe";
     }
-
+    //The person can only have one instance as in singleton
     public static Person getInstance(Player player) {
         if (instance == null) {
             synchronized (Flask.class) {

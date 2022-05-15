@@ -18,7 +18,7 @@ public class Pickaxe {
     public boolean isObtained() {
         return obtained;
     }
-
+    // The pickaxe uses a singleton
     public static Pickaxe getInstance() {
         if (instance == null) {
             synchronized (Flask.class) {
