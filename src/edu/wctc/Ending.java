@@ -17,6 +17,10 @@ public class Ending {
         }
     }
 
+    public void testEnding(HashMap<String, Integer> inventory) {
+        this.inventory = inventory;
+    }
+
     public int getGemCount() {
         int gemCount = 0;
         for (String i : inventory.keySet()) {
